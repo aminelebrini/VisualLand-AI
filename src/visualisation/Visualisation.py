@@ -21,3 +21,16 @@ class Visualisation:
         plt.xlabel("number of images per classe")
         plt.ylabel("classes")
         plt.show()
+
+
+    def visualisation_image(self, data_images):
+
+        for image, label in data_images.take(1):
+            plt.figure(figsize=(16,16))
+            for i in range(9):
+                ax = plt.subplot(3, 3, i + 1)
+                plt.imshow(image[i].numpy())
+                plt.title(int(label[i]))
+                plt.axis("off")
+
+        plt.show()

@@ -2,12 +2,18 @@ import tensorflow as tf
 from pathlib import Path
 from PIL import Image
 import matplotlib.pyplot as plt
-from collections import Counter
+import pandas as pd
 import cv2
+import hashlib 
+from sklearn.model_selection import train_test_split
+
+
+
+
 class DatasetExplorer:
     def __init__(self, image_dataset):
         self.dataset_dir = Path(image_dataset)
-
+        self.images = []
     def identify_classes_and_distribution(self):
 
         images_class = {
@@ -47,8 +53,6 @@ class DatasetExplorer:
         return class_count, distribution_images
 
 
-
-
     def count_image_per_class(self):
 
         class_count = {}
@@ -82,7 +86,7 @@ class DatasetExplorer:
         min_width = None
         min_height = None
         extensions = {".jpg", ".jpeg", ".png"}
-
+        images = []
         for class_folder_image in self.dataset_dir.iterdir():
             if class_folder_image.is_dir():
                 for image_path in class_folder_image.glob("*"):
@@ -95,8 +99,58 @@ class DatasetExplorer:
                         
                             if min_height is None or height < min_height:
                                 min_height = height
+
+                        self.images.append(image_path)
                     else:
                         print("images not found!")
 
         return min_width, min_height
+
+    def problematics_data(self):
+
+        hashes = {}
+        duplicates = []
+        not_duplicated = []
+        for image_path in self.images:
+            if image_path.is_file():
+                fil_hash = hashlib.sha256(image_path.read_bytes()).hexdigest()
+
+                if fil_hash in hashes:
+                    duplicates.append((hashes[fil_hash], image_path))
+
+                else:
+                    hashes[fil_hash] = image_path
+                    not_duplicated.append(image_path)
+
+        return duplicates , not_duplicated , hashes
+
+    def separation_data(self, data_images):
+
+        labels = []
+        temps_labels = []
+        for image_path in data_images:
+            labels.append(image_path.parent.name)
+  
+        train, temp_vals = train_test_split(data_images, 
+                                                test_size=0.2,
+                                                random_state=42,
+                                                stratify=labels
+                                            )
+
+        for image_path in temp_vals:
+            temps_labels.append(image_path.parent.name)  
+        
+        validation, test = train_test_split(
+            temp_vals, 
+            test_size=0.5,
+            random_state=42,
+            stratify=temps_labels
+        )
+
+        return train , validation, test
+
+        
+        
+
+
 

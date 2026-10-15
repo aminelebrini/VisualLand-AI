@@ -1,0 +1,2 @@
+# Large local dataset archive (kept on disk, excluded from Git)
+/data/Intel_Image_Classification.zip
