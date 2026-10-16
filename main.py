@@ -2,6 +2,8 @@ from pathlib import Path
 from src.DatasetExplorer import DatasetExplorer
 from src.visualisation.Visualisation import Visualisation
 from src.DataTraitement import DataTraitement
+from models.CNN import CNN
+
 if __name__ == "__main__":
     dataset_Root = Path("data/Intel_Image_Classification")
     train_dir = dataset_Root / "seg_train_test" / "seg_train"
@@ -113,3 +115,20 @@ if __name__ == "__main__":
         print("augmented trained dataset : ", augmented_trained_dataset)
 
         visualisation.visualisation_image(augmented_trained_dataset)
+
+        print("="*50)
+
+        print("model building !")
+        cnn_model = CNN()
+        model = cnn_model.build_model()
+        model.compile(
+            optimizer='adam', 
+            loss='sparse_categorical_crossentropy', 
+            metrics=['accuracy'])
+
+        model.summary()
+
+        print("="*50)
+        print("model training !")
+        history = cnn_model.training(augmented_trained_dataset)
+        print("model training history : ", history)
