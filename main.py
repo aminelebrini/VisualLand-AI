@@ -26,9 +26,9 @@ if __name__ == "__main__":
         print(class_count)
         print(image_distribution)
         
-        visualisation = Visualisation()
-        visualisation.visualisation_distribution(image_distribution.keys(), image_distribution.values())
-        visualisation.visualisation_count_image_per_classe(class_count.keys(), class_count.values())
+        # visualisation = Visualisation()
+        # visualisation.visualisation_distribution(image_distribution.keys(), image_distribution.values())
+        # visualisation.visualisation_count_image_per_classe(class_count.keys(), class_count.values())
 
         print("duplicated images display!")
         print("="*50)
@@ -37,7 +37,7 @@ if __name__ == "__main__":
         print("="*50)
         print("not duplicated images display!")
         print("="*50)
-        for not_duplicated in not_duplicated_images:
+        for not_duplicated in not_duplicated_images[::6]:
             print("\nunique images examples:", not_duplicated)
         print("="*50)
         print("split data image to train and validation and test!")
@@ -114,7 +114,7 @@ if __name__ == "__main__":
 
         print("augmented trained dataset : ", augmented_trained_dataset)
 
-        visualisation.visualisation_image(augmented_trained_dataset)
+        # visualisation.visualisation_image(augmented_trained_dataset)
 
         print("="*50)
 
