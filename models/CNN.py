@@ -7,7 +7,7 @@ class CNN:
     def build_model(self):
 
         model = tf.keras.Sequential([
-            tf.keras.layers.Conv2D(32,(3,3), activation='relu', input_shape=(150, 150, 3)),
+            tf.keras.layers.Conv2D(32,(3,3), activation='relu', input_shape=(256, 256, 3)),
             tf.keras.layers.MaxPooling2D((2,2), strides=2),
 
             tf.keras.layers.Conv2D(64,(3,3), activation='relu'),
@@ -28,10 +28,12 @@ class CNN:
 
         return model
 
-    def training(self, data_set):
+    def training(self, data_set, validation_data=None, callbacks=None):
         history = self.model.fit(
             data_set,
             epochs=10,
+            validation_data=validation_data,
+            callbacks=callbacks,
         )
 
         return history

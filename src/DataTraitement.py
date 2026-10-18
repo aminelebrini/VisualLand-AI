@@ -38,7 +38,6 @@ class DataTraitement:
             tf.TensorSpec(shape=(), dtype=tf.int32)
             )
         )
-        dataset = dataset.shard(num_shards=5, index=0)
         dataset = dataset.shuffle(buffer_size=1000)
         dataset = dataset.batch(32)
         dataset = dataset.prefetch(tf.data.AUTOTUNE)
