@@ -3,7 +3,7 @@ from src.DatasetExplorer import DatasetExplorer
 from src.visualisation.Visualisation import Visualisation
 from src.DataTraitement import DataTraitement
 from models.CNN import CNN
-
+import tensorflow as tf
 if __name__ == "__main__":
     dataset_Root = Path("data/Intel_Image_Classification")
     train_dir = dataset_Root / "seg_train_test" / "seg_train"
@@ -128,7 +128,16 @@ if __name__ == "__main__":
 
         model.summary()
 
+
+        early_stopping = tf.keras.callbacks.EarlyStopping(
+            monitor='val_loss',
+            patience=6,
+            restore_best_weights=True
+        )
+
         print("="*50)
         print("model training !")
-        history = cnn_model.training(augmented_trained_dataset)
+        history = cnn_model.training(augmented_trained_dataset, callbacks=[early_stopping])
         print("model training history : ", history)
+
+        
