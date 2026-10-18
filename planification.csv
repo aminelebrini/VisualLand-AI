@@ -1,0 +1,18 @@
+Summary,Issue Type
+Préparer l'environnement,Task
+Importer le jeu de données,Task
+Explorer le jeu de données,Task
+Vérifier les classes d'images,Task
+Détecter les doublons,Task
+Séparer les données,Task
+Redimensionner les images,Task
+Normaliser les images,Task
+Créer les lots de données,Task
+Augmenter les données,Task
+Construire le modèle,Task
+Compiler le modèle,Task
+Entraîner le modèle,Task
+Évaluer le modèle,Task
+Analyser les résultats,Task
+Sauvegarder le modèle,Task
+Préparer la présentation,Task
